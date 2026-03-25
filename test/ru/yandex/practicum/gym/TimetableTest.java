@@ -104,7 +104,7 @@ public class TimetableTest {
         // Проверить, что за понедельник в 13:00 вернулось одно занятие
         TreeMap<TimeOfDay, List<TrainingSession>> monday13Map =
                 timetable.getTrainingSessionsForDayAndTime(
-                DayOfWeek.MONDAY, new TimeOfDay(13, 0));
+                        DayOfWeek.MONDAY, new TimeOfDay(13, 0));
         // Карта должна содержать один ключ - 13:00, значение - список из одного элемента
         List<TrainingSession> monday13Sessions = monday13Map.get(new TimeOfDay(13, 0));
         assertNotNull(monday13Sessions, "Список не должен быть null");
@@ -114,7 +114,7 @@ public class TimetableTest {
         // Проверить, что за понедельник в 14:00 не вернулось занятий
         TreeMap<TimeOfDay, List<TrainingSession>> monday14Map =
                 timetable.getTrainingSessionsForDayAndTime(
-                DayOfWeek.MONDAY, new TimeOfDay(14, 0));
+                        DayOfWeek.MONDAY, new TimeOfDay(14, 0));
         assertTrue(monday14Map.isEmpty(), "В понедельник 14:00 нет занятий.");
     }
 
