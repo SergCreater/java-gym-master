@@ -1,6 +1,6 @@
 package ru.yandex.practicum.gym;
 
-import com.sun.source.tree.Tree;
+//import com.sun.source.tree.Tree;
 
 import java.util.*;
 
@@ -8,7 +8,7 @@ public class Timetable {
 
     private final HashMap<DayOfWeek, TreeMap<TimeOfDay, List<TrainingSession>>> timetable;
 
-    public Timetable(){
+    public Timetable() {
         this.timetable = new HashMap<>();
     }
 
@@ -34,7 +34,20 @@ public class Timetable {
         //сохраняем занятие в расписании
     }
 
-    public List<TrainingSession> getTrainingSessionsForDay(DayOfWeek dayOfWeek) {
+     public  TreeMap<TimeOfDay, List<TrainingSession>> getTrainingSessionsForDay(DayOfWeek dayOfWeek){
+        TreeMap<TimeOfDay, List<TrainingSession>> allTrain = new TreeMap<>();
+        TreeMap<TimeOfDay, List<TrainingSession>> trainOfDay = timetable.get(dayOfWeek);
+         if (trainOfDay == null){
+             return new TreeMap<>();
+         }
+         for(Map.Entry<TimeOfDay, List<TrainingSession>> entry: trainOfDay.entrySet()){
+             List<TrainingSession> sessions = new ArrayList<>(entry.getValue());
+             allTrain.put(entry.getKey(), sessions);
+         }
+        return allTrain;
+     }
+
+   /* public List<TrainingSession> getTrainingSessionsForDay(DayOfWeek dayOfWeek) {
         ArrayList<TrainingSession> allTrain = new ArrayList<>();
         TreeMap<TimeOfDay, List<TrainingSession>> trainOfDay = timetable.get(dayOfWeek);
 
@@ -46,11 +59,26 @@ public class Timetable {
             }
             return allTrain;
         }
-        }
+        }*/
         //как реализовать, тоже непонятно, но сложность должна быть О(1)
 
 
-    public List<TrainingSession> getTrainingSessionsForDayAndTime
+    public TreeMap<TimeOfDay, List<TrainingSession>> getTrainingSessionsForDayAndTime
+            (DayOfWeek dayOfWeek, TimeOfDay timeOfDay){
+        TreeMap<TimeOfDay, List<TrainingSession>> trainTime = timetable.get(dayOfWeek);
+        if(trainTime == null){
+            return new TreeMap<>();
+        }
+        List<TrainingSession> sessions = trainTime.get(timeOfDay);
+        if(sessions == null){
+            return new TreeMap<>();
+        }
+        TreeMap<TimeOfDay, List<TrainingSession>>result = new TreeMap<>();
+        result.put(timeOfDay, new ArrayList<>(sessions));
+        return result;
+    }
+
+    /*public List<TrainingSession> getTrainingSessionsForDayAndTime
             (DayOfWeek dayOfWeek, TimeOfDay timeOfDay) {
         TreeMap<TimeOfDay, List<TrainingSession>> traning = timetable.get(dayOfWeek);
         ArrayList<TrainingSession> trainForTime = new ArrayList<>();
@@ -65,7 +93,7 @@ public class Timetable {
             }
             return trainForTime;
         }
-    }
+    }*/
         //как реализовать, тоже непонятно, но сложность должна быть О(1)
 
     public List<CounterOfTrainings> getCountByCoaches(){
@@ -80,6 +108,8 @@ public class Timetable {
                               if(countByCoaches.containsKey(coaches.getCoach())){
                                   countByCoaches.put(coaches.getCoach(),
                                           countByCoaches.get(coaches.getCoach()) + 1 );
+                              }else{
+                                  countByCoaches.put(coaches.getCoach(), 1);
                               }
                           }
                       }
