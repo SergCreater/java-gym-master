@@ -63,8 +63,8 @@ public class Timetable {
     //как реализовать, тоже непонятно, но сложность должна быть О(1)
 
 
-    public TreeMap<TimeOfDay, List<TrainingSession>> getTrainingSessionsForDayAndTime
-            (DayOfWeek dayOfWeek, TimeOfDay timeOfDay) {
+    public TreeMap<TimeOfDay, List<TrainingSession>> getTrainingSessionsForDayAndTime(
+            DayOfWeek dayOfWeek, TimeOfDay timeOfDay) {
         TreeMap<TimeOfDay, List<TrainingSession>> trainTime = timetable.get(dayOfWeek);
         if (trainTime == null) {
             return new TreeMap<>();
